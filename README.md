@@ -77,13 +77,14 @@ Subjects:	Computation and Language (cs.CL)
 Cite as:	arXiv:1802.05365 [cs.CL]
  	(or arXiv:1802.05365v2 [cs.CL] for this version)
 
-|标题|说明|附加|
-|-|-|-|-|
-|[Deep contextualized word representations](https://arxiv.org/abs/1802.05365v2)|该研究提出了一种新型深度语境化词表征，可对词使用的复杂特征（如句法和语义）和词使用在语言语境中的变化进行建模（即对多义词进行建模）。这些表征可以轻松添加至已有模型，并在 6 个 NLP 问题中显著提高当前最优性能。|20180215|
-|[TensorFlow Hub 实现](https://tfhub.dev/google/elmo/2)|Embeddings from a language model trained on the 1 Billion Word Benchmark.||
-|[allennlp.org - elmo](https://allennlp.org/elmo)|论文官网 elmo||
-|[bilm-tf](https://github.com/allenai/bilm-tf)|论文官方实现 Tensorflow implementation of contextualized word representations from bi-directional language models||
-|[NAACL 2018最佳论文：艾伦人工智能研究所提出新型深度语境化词表征](https://www.jiqizhixin.com/articles/060704)|机器之心解读|20180607|
-|[把 ELMo 作为 keras 的一个嵌入层使用](https://github.com/strongio/keras-elmo)|GitHub|201804|
+
+# 更多资源
++ [望江人工智库](https://yuanxiaosc.github.io/tags/ELMO/)
++ [Deep contextualized word representations](https://arxiv.org/abs/1802.05365v2)
++ [TensorFlow Hub 实现](https://tfhub.dev/google/elmo/2)
++ [allennlp.org - elmo](https://allennlp.org/elmo)
++ [bilm-tf](https://github.com/allenai/bilm-tf)
++ [NAACL 2018最佳论文：艾伦人工智能研究所提出新型深度语境化词表征](https://www.jiqizhixin.com/articles/060704)
++ [把 ELMo 作为 keras 的一个嵌入层使用](https://github.com/strongio/keras-elmo)
 
 
