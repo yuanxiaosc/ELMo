@@ -2,14 +2,13 @@
 
 ELMo: Embeddings from Language Models. Using ELMo as a word embedding in the deep neural network model.
 
-
-
 > NAACL 2018最佳论文 [Deep contextualized word representations](https://arxiv.org/abs/1802.05365v2)：艾伦人工智能研究所提出新型深度语境化词表征（研究者使用从双向 LSTM 中得到的向量，该 LSTM 是使用成对语言模型（LM）目标在大型文本语料库上训练得到的。因此，该表征叫作 ELMo（Embeddings from Language Models）表征。）。
 
-# ELMo 使用方法
+# ELMo 使用方法说明
 
 + [官方版](https://github.com/allenai/allennlp/blob/master/tutorials/how_to/elmo.md)
 + [知乎简版](https://zhuanlan.zhihu.com/p/37915351)
+
 
 ## [ELMo TensorFlow Hub 的使用方法](https://tfhub.dev/google/elmo/2)
 
@@ -64,6 +63,8 @@ The output dictionary contains:
 + elmo: the weighted sum of the 3 layers, where the weights are trainable. This tensor has shape [batch_size, max_length, 1024]
 + default: a fixed mean-pooling of all contextualized word representations with shape [batch_size, 1024].
 
+## ELMo tfhub 使用的具体例子
+https://github.com/Prasad9/TFHubSample/tree/master/TextEmbeddings
 
 # [Deep contextualized word representations](https://arxiv.org/abs/1802.05365v2)
 Matthew E. Peters, Mark Neumann, Mohit Iyyer, Matt Gardner, Christopher Clark, Kenton Lee, Luke Zettlemoyer
