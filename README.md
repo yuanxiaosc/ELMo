@@ -4,69 +4,50 @@ ELMo: Embeddings from Language Models. Using ELMo as a word embedding in the dee
 
 > NAACL 2018最佳论文 [Deep contextualized word representations](https://arxiv.org/abs/1802.05365v2)：艾伦人工智能研究所提出新型深度语境化词表征（研究者使用从双向 LSTM 中得到的向量，该 LSTM 是使用成对语言模型（LM）目标在大型文本语料库上训练得到的。因此，该表征叫作 ELMo（Embeddings from Language Models）表征。）。
 
-# ELMo 使用方法说明
+## Resource description
 
-+ [官方版](https://github.com/allenai/allennlp/blob/master/tutorials/how_to/elmo.md)
-+ [知乎简版](https://zhuanlan.zhihu.com/p/37915351)
+|name|description|
+|-|-|
+|[elmo_tfhub_use_methods.ipynb](https://nbviewer.jupyter.org/github/yuanxiaosc/ELMo/blob/master/elmo_tfhub_use_methods.ipynb)|Summarize four usage methods of Elmo embedding.|
+|[IMDB_ELMo_As_Embedding_Layer.ipynb](https://github.com/yuanxiaosc/ELMo/blob/master/tfhub_elmo_use_examples/IMDB_ELMo_As_Embedding_Layer.ipynb)|IMDB movie review sentiment analysis example|
+|[elmo_sentence_level_embedding.ipynb](https://github.com/yuanxiaosc/ELMo/blob/master/tfhub_elmo_use_examples/elmo_sentence_level_embedding.ipynb)|Kaggle's movie review sentiment analysis example|
+|[elmo_word_level_embedding.ipynb](https://github.com/yuanxiaosc/ELMo/blob/master/tfhub_elmo_use_examples/elmo_word_level_embedding.ipynb)|Kaggle's movie review sentiment analysis example|
+|[IMDB_ELMo_Preprocessing_Data.ipynb](https://github.com/yuanxiaosc/ELMo/blob/master/allennlp_elmo_use_examples/IMDB_ELMo_Preprocessing_Data.ipynb)|Preprocessing data with Elmo|
 
-
-## [ELMo TensorFlow Hub 的使用方法](https://tfhub.dev/google/elmo/2)
-
-**Overview**
-Computes contextualized word representations using character-based word representations and bidirectional LSTMs, as described in the paper "Deep contextualized word representations" [1].
-
-This modules supports inputs both in the form of raw text strings or tokenized text strings.
-
-The module outputs fixed embeddings at each LSTM layer, a learnable aggregation of the 3 layers, and a fixed mean-pooled vector representation of the input.
-
-The complex architecture achieves state of the art results on several benchmarks. Note that this is a very computationally expensive module compared to word embedding modules that only perform embedding lookups. The use of an accelerator is recommended.
-
-Trainable parameters
-The module exposes 4 trainable scalar weights for layer aggregation.
-
-**Example use**
-```python
-elmo = hub.Module("https://tfhub.dev/google/elmo/2", trainable=True)
-embeddings = elmo(
-["the cat is on the mat", "dogs are in the fog"],
-signature="default",
-as_dict=True)["elmo"]
+## A code
 ```
-```python
-elmo = hub.Module("https://tfhub.dev/google/elmo/2", trainable=True)
+import tensorflow as tf
+import tensorflow_hub as hub
+# elmo_url="https://tfhub.dev/google/elmo/2"
+# hub.Module(elmo_url, trainable=True)
+# You can either use the URL directly or download the file locally and then use it.
+# hub.Module(path_to_elmo_model, trainable=True)
+
 tokens_input = [["the", "cat", "is", "on", "the", "mat"],
-["dogs", "are", "in", "the", "fog", ""]]
+                ["dogs", "are", "in", "the", "fog", ""]]
 tokens_length = [6, 5]
-embeddings = elmo(
-inputs={
-"tokens": tokens_input,
-"sequence_len": tokens_length
-},
-signature="tokens",
-as_dict=True)["elmo"]
+max_length = max(tokens_length)
+
+def tokens_elmo(path_to_hub_elmo_model="https://tfhub.dev/google/elmo/2"):
+    elmo_tokens_input = tf.placeholder(dtype=tf.string, shape=[None, max_length], name="tokens_input")
+    elmo_sequence_length_input = tf.placeholder(dtype=tf.int32, shape=[None,], name="tokens_length")
+
+    module = hub.Module(path_to_hub_elmo_model, trainable=True)
+    module_features = module(inputs={"tokens":elmo_tokens_input, "sequence_len":elmo_sequence_length_input},
+                             signature='tokens', as_dict=True)
+    elmo_embedding = module_features["elmo"]  #[batch_size, max_length, 1024], the weighted sum of the 3 layers, where the weights are trainable.
+    return elmo_tokens_input, elmo_sequence_length_input, elmo_embedding
+
+elmo_tokens_input, elmo_sequence_length_input, elmo_embedding = tokens_elmo(path_to_hub_elmo_model="/home/b418/jupyter_workspace/B418_common/袁宵/tfhub_modules/elmo")
+
+with tf.Session() as sess:
+    sess.run([tf.global_variables_initializer(), tf.tables_initializer()])
+    out_elmo_embedding = sess.run(elmo_embedding,feed_dict={elmo_tokens_input:tokens_input,
+                                                                elmo_sequence_length_input:tokens_length})
+    print("out_elmo_shape:\t", out_elmo_embedding.shape)
 ```
 
-
-**Input**
-The module defines two signatures: default, and tokens.
-
-With the default signature, the module takes untokenized sentences as input. The input tensor is a string tensor with shape [batch_size]. The module tokenizes each string by splitting on spaces.
-
-With the tokens signature, the module takes tokenized sentences as input. The input tensor is a string tensor with shape [batch_size, max_length] and an int32 tensor with shape [batch_size] corresponding to the sentence length. The length input is necessary to exclude padding in the case of sentences with varying length.
-
-**Output**
-The output dictionary contains:
-
-+ word_emb: the character-based word representations with shape [batch_size, max_length, 512].
-+ lstm_outputs1: the first LSTM hidden state with shape [batch_size, max_length, 1024].
-+ lstm_outputs2: the second LSTM hidden state with shape [batch_size, max_length, 1024].
-+ elmo: the weighted sum of the 3 layers, where the weights are trainable. This tensor has shape [batch_size, max_length, 1024]
-+ default: a fixed mean-pooling of all contextualized word representations with shape [batch_size, 1024].
-
-## ELMo tfhub 使用的具体例子
-https://github.com/Prasad9/TFHubSample/tree/master/TextEmbeddings
-
-# [Deep contextualized word representations](https://arxiv.org/abs/1802.05365v2)
+## Paper [Deep contextualized word representations](https://arxiv.org/abs/1802.05365v2)
 Matthew E. Peters, Mark Neumann, Mohit Iyyer, Matt Gardner, Christopher Clark, Kenton Lee, Luke Zettlemoyer
 
 > Our word vectors are learned functions of the internal states of a deep bidirectional language model (biLM), which is pre-trained on a large text corpus. We show that these representations can be easily added to existing models and significantly improve the state of the art across six challenging NLP problems, including question answering, textual entailment and sentiment analysis. We also present an analysis showing that exposing the deep internals of the pre-trained network is crucial, allowing downstream models to mix different types of semi-supervision signals.
