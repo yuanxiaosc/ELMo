@@ -14,7 +14,7 @@ ELMo: Embeddings from Language Models. Using ELMo as a word embedding in the dee
 |[elmo_word_level_embedding.ipynb](https://github.com/yuanxiaosc/ELMo/blob/master/tfhub_elmo_use_examples/elmo_word_level_embedding.ipynb)|Kaggle's movie review sentiment analysis example|
 |[IMDB_ELMo_Preprocessing_Data.ipynb](https://github.com/yuanxiaosc/ELMo/blob/master/allennlp_elmo_use_examples/IMDB_ELMo_Preprocessing_Data.ipynb)|Preprocessing data with Elmo|
 
-## A code
+## A code example
 ```
 import tensorflow as tf
 import tensorflow_hub as hub
@@ -46,6 +46,9 @@ with tf.Session() as sess:
                                                                 elmo_sequence_length_input:tokens_length})
     print("out_elmo_shape:\t", out_elmo_embedding.shape)
 ```
+
+## Using elmo
+[Create a semantic search engine](https://towardsdatascience.com/elmo-contextual-language-embedding-335de2268604)
 
 ## Paper [Deep contextualized word representations](https://arxiv.org/abs/1802.05365v2)
 Matthew E. Peters, Mark Neumann, Mohit Iyyer, Matt Gardner, Christopher Clark, Kenton Lee, Luke Zettlemoyer
