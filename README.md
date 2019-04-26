@@ -1,6 +1,6 @@
 # ELMo
-
-ELMo: Embeddings from Language Models. Using ELMo as a word embedding in the deep neural network model.
+ELMo: Embeddings from Language Models, which comes from the paper "Deep contextualized word representations".
+> This resource includes various methods of using ELMo, visual analysis of ELMo, and paper interpretation.
 
 > NAACL 2018最佳论文 [Deep contextualized word representations](https://arxiv.org/abs/1802.05365v2)：艾伦人工智能研究所提出新型深度语境化词表征（研究者使用从双向 LSTM 中得到的向量，该 LSTM 是使用成对语言模型（LM）目标在大型文本语料库上训练得到的。因此，该表征叫作 ELMo（Embeddings from Language Models）表征。）。
 
@@ -13,6 +13,7 @@ ELMo: Embeddings from Language Models. Using ELMo as a word embedding in the dee
 |[elmo_sentence_level_embedding.ipynb](https://github.com/yuanxiaosc/ELMo/blob/master/tfhub_elmo_use_examples/elmo_sentence_level_embedding.ipynb)|Kaggle's movie review sentiment analysis example|
 |[elmo_word_level_embedding.ipynb](https://github.com/yuanxiaosc/ELMo/blob/master/tfhub_elmo_use_examples/elmo_word_level_embedding.ipynb)|Kaggle's movie review sentiment analysis example|
 |[IMDB_ELMo_Preprocessing_Data.ipynb](https://github.com/yuanxiaosc/ELMo/blob/master/allennlp_elmo_use_examples/IMDB_ELMo_Preprocessing_Data.ipynb)|Preprocessing data with Elmo|
+|Visualizing ELMo Contextual Vectors|[Visualizing...](https://nbviewer.jupyter.org/github/yuanxiaosc/ELMo/blob/master/Visualizing%20ELMo%20Contextual%20Vectors/Visualizing%20ELMo%20Contextual%20Vectors.ipynb)|
 
 ## A code example
 ```
@@ -62,6 +63,9 @@ Subjects:	Computation and Language (cs.CL)
 Cite as:	arXiv:1802.05365 [cs.CL]
  	(or arXiv:1802.05365v2 [cs.CL] for this version)
 
+# Visualizing ELMo
+![](https://cdn-images-1.medium.com/max/800/1*RHsRbSospewPepQWliTf1g.png)
+![](https://cdn-images-1.medium.com/max/800/1*-xTo2Y-1VyvjYywhddyTOg.png)
 
 # 更多资源
 + [望江人工智库](https://yuanxiaosc.github.io/tags/ELMO/)
@@ -71,5 +75,5 @@ Cite as:	arXiv:1802.05365 [cs.CL]
 + [bilm-tf](https://github.com/allenai/bilm-tf)
 + [NAACL 2018最佳论文：艾伦人工智能研究所提出新型深度语境化词表征](https://www.jiqizhixin.com/articles/060704)
 + [把 ELMo 作为 keras 的一个嵌入层使用](https://github.com/strongio/keras-elmo)
-
++ [Visualizing ELMo Contextual Vectors](https://towardsdatascience.com/visualizing-elmo-contextual-vectors-94168768fdaa)
 
